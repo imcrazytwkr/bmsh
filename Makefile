@@ -6,20 +6,21 @@ bin_prefix := $(prefix)/bin
 cmd_prefix := $(prefix)/share/bmsh
 
 CMDS := $(wildcard $(mkfile_dir)/commands/*.sh)
+MAIN := $(mkfile_dir)/bmsh.sh
 
 .PHONY: format lint install uninstall
 
 format:
-	find '$(mkfile_dir)' -type f -iname '*.sh' -print0 | xargs -0 shfmt -l -w
+	shfmt -l -w '$(MAIN)' $(foreach C,$(CMDS),'$C')
 
 lint: format
-	find '$(mkfile_dir)' -type f -iname '*.sh' -print0 | xargs -0 shellcheck
+	shellcheck '$(MAIN)' $(foreach C,$(CMDS),'$C')
 
 # @NOTE: for `install -T` [SOURCE] comes before [DEST],
 # for `install -t` it's the other way round
-install:	
-	install -Dm755 -T '$(mkfile_dir)/bmsh.sh' '$(bin_prefix)/bmsh'
+install:
 	install -Dm755 -t '$(cmd_prefix)' $(foreach C,$(CMDS),'$C')
+	install -Dm755 -T '$(MAIN)' '$(bin_prefix)/bmsh'
 
 uninstall:
 	rm -f $(foreach C,$(notdir $(CMDS)),'$(cmd_prefix)/$C')
