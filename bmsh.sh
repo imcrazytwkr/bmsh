@@ -34,7 +34,8 @@ if [ ! -s "$bookmarks_file" ]; then
 	exit 1
 fi
 
-url="$(sed '/^\s*#/d' "$bookmarks_file" | "$menu_cmd")"
+# `%h` is not a valid urlencoded character sequence so we can use it for safe expansion
+url="$(sed -e '/^\s*#/d' -e '/^\s*$/d' -e "s|%h|$HOME|" "$bookmarks_file" | "$menu_cmd")"
 [ -z "$url" ] && exit 0
 
 command -v xdg-open >/dev/null && exec xdg-open "$url"

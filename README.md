@@ -51,8 +51,11 @@ and the menu provider.
 Bookmarks file should be located at `$XDG_CONFIG_HOME/bmsh/bookmarks`
 (`$HOME/.config/bmsh/bookmarks` by default). Its format is that of a
 [TSV](https://en.wikipedia.org/wiki/Tab-separated_values) file with
-added support for comments (lines starting with `#` and blank lines are ignored).
+added support for comments (lines starting with `#` are ignored).
 
+Blank lines are also ignored and if you would like to use it for
+file paths relative to your home directory, `%h` gets expanded
+to the absolute path of the current user's "$HOME".
 
 Here's an example bookmarks file:
 
@@ -60,6 +63,10 @@ Here's an example bookmarks file:
 # vim: set noexpandtab tabstop=4 shiftwidth=4:
 Google	https://google.com
 Discord	https://discordapp.com
+
+# Both options work for directories
+Documents   file://%h/Documents
+Downloads   %h/Downloads
 ```
 
 ### Menu providers
