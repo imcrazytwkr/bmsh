@@ -41,6 +41,11 @@ Call `bmsh`, optionally specifying a menu provider witn `-m` argument
 (bundled menu providers are `fzf` and `fuzzel`), from your terminal or
 bind its execution to a key combination in your DE/WM/Compositor configuration.
 
+> :warning: If you are using bmsh on Linux and have your directory bookmarks
+> opened in an unexpected software, explicitly set your preference for opening
+> directories through `xdg-open` to fix it. Example for `pcmanfm-qt`:
+> `xdg-mime default pcmanfm-qt.desktop 'inode/directory'`.
+
 ## Configuration
 
 There are two things that can be "configured" when using bmsh: your bookmarks
